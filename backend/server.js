@@ -11,12 +11,16 @@ let Todo = require('./todo.model');
 app.use(cors());
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb://127.0.01:27017/todos', { useNewUrlParser: true });
-const connection = mongoose.connection;
+try {
+  mongoose.connect('mongodb://127.0.01:27017/todos', { useNewUrlParser: true });
+  const connection = mongoose.connection;
+  connection.once('open', function() {
+    console.log("MongoDB database connection established successfully");
+  })
+} catch(err) {
+  console.log(err);
+}
 
-connection.once('open', function() {
-  console.log("MongoDB database connection established successfully");
-})
 
 
 
